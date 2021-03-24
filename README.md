@@ -7,13 +7,13 @@ wow, very data
 
 ## why use this plugin? 
 
-The `leaflet-glify` plugin is great(!), but does not behave like a typical leaflet layer, e.g.
+The `leaflet-glify` plugin is great(🙏!), but does not behave like a typical leaflet layer, e.g.
 
 - unlike the [L.geoJSON](https://leafletjs.com/reference-1.7.1.html#geojson) layer, GeoJSON polygons/points/lines must be created and managed as seperate layers, which can quickly become unmanageable
 - common functions like `layer.addTo(map)`, `map.removeLayer(layer)` don't work 'the leaflet way'
 - polygons and points/lines have inconsistent coordinate ordering (GeoJSON convention is `[lng,lat]`)
-- missing other convienince methods (e.g. `layer.getBounds`)
-- default styling is very inconsistent with
+- missing other convienience methods (e.g. `layer.getBounds`)
+- default styling is very inconsistent with leaflet
 
 
 ## install
