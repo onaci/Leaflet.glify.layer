@@ -7,9 +7,9 @@ wow, very data
 
 ## why use this plugin? 
 
-The `leaflet-glify` plugin is great 🙏🙏, but does not behave like a typical leaflet layer, e.g.
+The `leaflet-glify` plugin is great 🙏🙏 but does not behave like a typical leaflet layer, e.g.
 
-- unlike the [L.geoJSON](https://leafletjs.com/reference-1.7.1.html#geojson) layer, GeoJSON polygons/points/lines must be created and managed as seperate layers, which can quickly become unmanageable
+- unlike the [L.geoJSON](https://leafletjs.com/reference-1.7.1.html#geojson) layer, GeoJSON polygons/points/lines must be created and managed as separate layers, which can quickly become unmanageable
 - common functions like `layer.addTo(map)`, `map.removeLayer(layer)` don't work 'the leaflet way'
 - polygons and points/lines have inconsistent coordinate ordering (GeoJSON convention is `[lng,lat]`)
 - missing other convienience methods (e.g. `layer.getBounds`)
@@ -27,10 +27,10 @@ This plugin acts as an add-on for `L.glify`, to managing the various L.glify lay
 
 Most importantly - GeoJSON can either be provided as:
 
-1. A single FeatureCollection containing features of mixed geometry types
+1. A single `FeatureCollection` containing features of mixed geometry types
   - this is slower as features must be sorted into types; however
   - sorting uses web workers to avoid blocking main thread
-2. A FeatureCollection for each geometry type (faster)
+2. A `FeatureCollection` for each geometry type (faster)
   - see [demo](https://onaci.github.io/leaflet-glify-layer/) for concrete example
 
 ```javascript
@@ -58,7 +58,7 @@ const myLayer = L.glify.layer({
   // will be created if doesn't exist, defaults to overlayPane
   // (used by L.glify as `pane` option)
   // https://leafletjs.com/reference-1.6.0.html#map-pane
-  paneName: 'overlayPane',
+  paneName: "overlayPane",
   
   // OPTIONAL - callback to be notified when types 
   // have been sorted, L.glify will be created
