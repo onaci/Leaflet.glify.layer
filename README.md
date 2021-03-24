@@ -31,7 +31,8 @@ Most importantly - GeoJSON can either be provided as:
   - this is slower as features must be sorted into types; however
   - sorting uses web workers to avoid blocking main thread
 2. A `FeatureCollection` for each geometry type (faster)
-  - see [demo](https://onaci.github.io/leaflet-glify-layer/) for concrete example
+
+**Note:** L.glify expects points as an array of coords rather than GeoJSON features, so for now - the full GeoJSON object/properties are lost.. 😞
 
 ```javascript
 const myLayer = L.glify.layer({
