@@ -3,6 +3,7 @@
 	"version": "0.0.0",
 	"description": "Add-on for the Leaflet.glify plugin to provide more leaflet-idiomatic bindings",
 	"main": "dist/leaflet-glify-layer.js",
+	"license": "SEE LICENSE IN LICENCE",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "./node_modules/gulp/bin/gulp.js"
