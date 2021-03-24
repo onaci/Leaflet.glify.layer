@@ -7,7 +7,7 @@ wow, very data
 
 ## why use this plugin? 
 
-The `leaflet-glify` plugin is great(🙏!), but does not behave like a typical leaflet layer, e.g.
+The `leaflet-glify` plugin is great 🙏🙏, but does not behave like a typical leaflet layer, e.g.
 
 - unlike the [L.geoJSON](https://leafletjs.com/reference-1.7.1.html#geojson) layer, GeoJSON polygons/points/lines must be created and managed as seperate layers, which can quickly become unmanageable
 - common functions like `layer.addTo(map)`, `map.removeLayer(layer)` don't work 'the leaflet way'
@@ -34,7 +34,7 @@ Most importantly - GeoJSON can either be provided as:
   - see [demo](https://onaci.github.io/leaflet-glify-layer/) for concrete example
 
 ```javascript
-const GlifyLayer = L.glify.layer({
+const myLayer = L.glify.layer({
   
   // Option #1. A single GeoJSON FeatureCollection that needs to be sorted
   geojson: {},
@@ -68,6 +68,8 @@ const GlifyLayer = L.glify.layer({
   onAdd: function(){},
   onRemove: function(){},
 });
+
+myLayer.addToMap(map);
 ```
 
 ## public methods
