@@ -125,9 +125,9 @@
         if (!this.options.types && this.options.geojson) {
           this._separateTypes();
         } else if (this.options.types) {
-          this._shapes = this.options.types.shapes ? this.options.types.shapes : {};
-          this._lines = this.options.types.lines ? this.options.types.lines : {};
-          this._points = this.options.types.points ? this.options.types.points.features.map(f => f.geometry.coordinates) : [];
+          this._shapes = this.options.types.shapes ? this._clone(this.options.types.shapes) : {};
+          this._lines = this.options.types.lines ? this._clone(this.options.types.lines) : {};
+          this._points = this.options.types.points ? this.options.types.points.features.slice().map(f => f.geometry.coordinates) : [];
 
           this._createLayers();
         } else {
@@ -263,7 +263,9 @@
       _separateTypes() {
         const numWorkers = this.options.numWorkers || window.navigator.hardwareConcurrency; // split features into chunks for worker
 
-        const featureChunks = this._chunkArray(this.options.geojson.features, numWorkers);
+        const features = this.options.geojson.features.slice();
+
+        const featureChunks = this._chunkArray(features, numWorkers);
 
         let running = 0;
 
@@ -286,10 +288,6 @@
             };
 
             this._createLayers();
-
-            if (this.options.onLayersInit) {
-              this.options.onLayersInit();
-            }
           }
         };
 
@@ -338,6 +336,16 @@
         }
 
         return result;
+      },
+
+      /**
+        * Clones the target, unsafe for objects with
+        * circular refs
+        * @param {object} target
+        */
+      _clone(target) {
+        if (!target) return target;
+        return JSON.parse(JSON.stringify(target));
       }
 
     });

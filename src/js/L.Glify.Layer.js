@@ -47,17 +47,17 @@ const GlifyLayer = L.Layer.extend({
 		};
 
 		// merge user options with defaults
-		this._glifyOptions = Object.assign(this._glifyOptions, this.options.glifyOptions);
-		
+		this._glifyOptions = Object.assign(this._glifyOptions, this.options.glifyOptions);	
+
 		if(!this.options.types && this.options.geojson) {
 			
 			this._separateTypes();
 		
 		} else if(this.options.types) {
 		
-			this._shapes = this.options.types.shapes ?  this.options.types.shapes : {};
-			this._lines = this.options.types.lines ?  this.options.types.lines : {};
-			this._points = this.options.types.points ? this.options.types.points.features.map(f => f.geometry.coordinates) : [];	
+			this._shapes = this.options.types.shapes ?  this._clone(this.options.types.shapes) : {};
+			this._lines = this.options.types.lines ?  this._clone(this.options.types.lines) : {};
+			this._points = this.options.types.points ? this.options.types.points.features.slice().map(f => f.geometry.coordinates) : [];	
 			
 			this._createLayers();
 		
@@ -153,7 +153,6 @@ const GlifyLayer = L.Layer.extend({
 	/*------------------------------------ PRIVATE ------------------------------------------*/
 
 	_createLayers(){
-
 		if(this._shapes.features) {
 				this._glifyOptions.data = this._shapes;	
 				this._shapesLayer = L.glify.shapes(this._glifyOptions);
@@ -171,7 +170,7 @@ const GlifyLayer = L.Layer.extend({
 		}
 
 		if(this._points.length > 0) {
-			this._glifyOptions.data = this._points;
+			this._glifyOptions.data = this._points;	
 			this._pointsLayer = L.glify.points(this._glifyOptions);
 		}
 		if (this.options.onLayersInit) this.options.onLayersInit();
@@ -189,13 +188,14 @@ const GlifyLayer = L.Layer.extend({
 		const numWorkers = this.options.numWorkers || window.navigator.hardwareConcurrency;
 		
 		// split features into chunks for worker
-		const featureChunks = this._chunkArray(this.options.geojson.features, numWorkers);
+		const features = this.options.geojson.features.slice();
+		const featureChunks = this._chunkArray(features, numWorkers);
 		
 		let running = 0;
 	
 		const workerDone = (e) => {
 			running -= 1;
-			
+
 			// features
 			this._shapes = this._shapes.concat(e.data.shapes);
 			this._lines = this._lines.concat(e.data.lines);
@@ -208,10 +208,6 @@ const GlifyLayer = L.Layer.extend({
 				this._lines = { type: "FeatureCollection", features: this._lines };
 
 				this._createLayers();
-
-				if (this.options.onLayersInit) {
-					this.options.onLayersInit();
-				}
 			}
 		}
 
@@ -255,7 +251,17 @@ const GlifyLayer = L.Layer.extend({
 				result.push(array.splice(0, Math.ceil(array.length / i)));
 		}
 		return result;
-	}
+	},
+
+	/**
+   * Clones the target, unsafe for objects with
+   * circular refs
+   * @param {object} target
+   */
+  _clone(target) {
+    if (!target) return target;
+    return JSON.parse(JSON.stringify(target));
+  },
 
 });
 

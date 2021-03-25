@@ -2,6 +2,11 @@
 
 Notable changes to this project will be documented in this file.
 
+## [0.0.4] 2021-03-25
+
+## Fixed 
+- input is cloned to stop mutation
+
 ## [0.0.3] 2021-03-25
 
 ## Changed 

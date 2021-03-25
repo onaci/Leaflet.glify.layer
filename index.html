@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+    <title>Leaflet.glify.layer</title>
+    <meta charset="utf-8">
+    <style>
+        html, body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            background: rgb(14, 21, 30);
+            height: 100%;
+        }
+
+        #map {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    
+    <!--peer deps-->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>  
+    <!-- note: avoid v3.1.0, has color issue -->
+    <script src="https://unpkg.com/leaflet.glify@3.0.2/dist/glify-browser.js"></script>
+    
+    <!-- the plugin -->
+    <script src="../dist/leaflet-glify-layer.js"></script>
+
+    <!-- for demo color scale only -->
+    <script src="https://unpkg.com/chroma-js@2.0.3/chroma.js"></script>
+    
+    <script>
+
+        var map = L.map('map').setView([30, 34], 4);
+        L.tileLayer("http://{s}.sm.mapstack.stamen.com/(toner-lite,$fff[difference],$fff[@23],$fff[hsl-saturation@20])/{z}/{x}/{y}.png")
+            .addTo(map);
+    
+        // -- data
+        fetch('mixed.json')
+        .then(response => response.json())
+        .then(data => init(data));
+
+        function init(geojson) {
+            
+            const layer = L.glify.layer({
+                geojson,
+                paneName: 'foo',
+                glifyOptions: {
+                    color: colorScale,
+                    size: 30,
+                    opacity: 0.8,
+                    click (e, feature, xy) {
+                        if (Array.isArray(feature)){
+                            L.popup()
+                            // its a [lng,lat] 
+                            .setLatLng(feature.reverse())
+                            .setContent(`You clicked on a point`)
+                            .openOn(map);
+                        } else {
+                            L.popup()
+                            .setLatLng(e.latlng)
+                            .setContent('You clicked on a ' + feature.geometry.type)
+                            .openOn(map);
+                        }  
+                        console.log({ e, feature }); 
+                    },
+                    sensitivity: 3,
+                    hover(e, feature) {
+                        console.log('hover', feature);
+                    }        
+                },
+                onAdd(){
+                    console.log('onAdd callback');
+                },
+                onLayersInit(){
+                    console.log('onLayersInit callback');
+                },
+                onRemove(){
+                    console.log('onRemove callback');
+                },
+            }); 
+
+            const layerControl = L.control.layers({}, { ' L.glify.layer': layer }, { collapsed: false });
+            layerControl.addTo(map);
+            layer.addTo(map);    
+        }
+
+
+        const domain = [0, 50];
+        const scale = chroma.scale('viridis').domain(domain);
+        function colorScale(index, feature) {
+            const color = scale(index).rgba().map(c => c / 255);
+            return {
+                r: color[0],
+                g: color[1],
+                b: color[2]
+            };
+        }
+    </script>
+</body>
+</html>
