@@ -112,22 +112,15 @@
           border: true,
           opacity: 0.2,
           size: 10,
-
-          color(index, feature) {
-            return {
-              r: 51 / 255,
-              g: 136 / 255,
-              b: 255 / 255,
-              a: 0
-            };
+          color: {
+            r: 0.2,
+            g: 0.5333333333333333,
+            b: 1,
+            a: 0
           }
+        }; // merge user options with defaults
 
-        };
-        this._glifyOptions = Object.assign(this._glifyOptions, this.options.glifyOptions); // this.options.glifyOptions.border = true;
-        // this.options.glifyOptions.opacity = 0.2;
-        // if (!this.options.glifyOptions.size) this.options.glifyOptions.size = 10;
-        // this._
-        // if (!this.options.glifyOptions.color) this.options.glifyOptions.color = this._color;
+        this._glifyOptions = Object.assign(this._glifyOptions, this.options.glifyOptions);
 
         if (!this.options.types && this.options.geojson) {
           this._separateTypes();
@@ -157,7 +150,31 @@
       /*------------------------------------ PUBLIC ------------------------------------------*/
 
       /**
+       * Returns [L.latLngBounds](https://leafletjs.com/reference-1.7.1.html#latlngbounds)
+       * for the L.glify.layer
+       */
+      getBounds() {
+        let flatCoords = [];
+
+        if (this._shapesLayer) {
+          flatCoords = flatCoords.concat(this._shapes.features.map(f => f.geometry.coordinates[0]).flat());
+        }
+
+        if (this._linesLayer) {
+          flatCoords = flatCoords.concat(this._lines.features.map(f => f.geometry.coordinates).flat());
+        }
+
+        if (this._pointsLayer) {
+          flatCoords = flatCoords.concat(this._points);
+        }
+
+        return L.latLngBounds(flatCoords.map(c => [c[1], c[0]]));
+      },
+
+      /**
        * Exec update() on each glify layer
+       * @param {object} data 
+       * @param {number} index 
        */
       update(data, index) {
         if (this._shapesLayer) this._shapesLayer.update(data, index);
@@ -172,6 +189,43 @@
         if (this._shapesLayer) this._shapesLayer.remove(index);
         if (this._linesLayer) this._linesLayer.remove(index);
         if (this._pointsLayer) this._pointsLayer.remove(index);
+      },
+
+      /**
+       * Re-render layers
+       */
+      render() {
+        if (this._shapesLayer) this._shapesLayer.render();
+        if (this._linesLayer) this._linesLayer.render();
+        if (this._pointsLayer) this._pointsLayer.render();
+      },
+
+      /**
+       * Update layer style options
+       * @param {object} options
+       * @param {boolean} options.border
+       * @param {function|object|string} options.color
+       * @param {number} options.opacity
+       * @param {number} options.size
+       */
+      setStyle(options) {
+        if (this._shapesLayer) {
+          this._shapesLayer.settings = Object.assign(this._shapesLayer.settings, options);
+
+          this._shapesLayer.render();
+        }
+
+        if (this._linesLayer) {
+          this._linesLayer.settings = Object.assign(this._linesLayer.settings, options);
+
+          this._linesLayer.render();
+        }
+
+        if (this._pointsLayer) {
+          this._pointsLayer.settings = Object.assign(this._pointsLayer.settings, options);
+
+          this._pointsLayer.render();
+        }
       },
 
       /*------------------------------------ PRIVATE ------------------------------------------*/
