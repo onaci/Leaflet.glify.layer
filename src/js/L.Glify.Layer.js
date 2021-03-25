@@ -95,7 +95,11 @@ const GlifyLayer = L.Layer.extend({
 		if (this._pointsLayer) {
 			flatCoords = flatCoords.concat(this._points);
 		}
-		return L.latLngBounds(flatCoords.map(c => [c[1], c[0]] ));
+
+		const initialBounds = L.latLngBounds(flatCoords.map(c => [c[1], c[0]] ));
+		const nw = initialBounds.getNorthWest();
+		const se = initialBounds.getSouthEast();
+		return L.latLngBounds(nw, se);
 	},
 
 	/**
