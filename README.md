@@ -2,6 +2,8 @@
 
 Add-on for the [Leaflet.glify](https://github.com/robertleeplummerjr/Leaflet.glify) plugin to provide more leaflet-idiomatic bindings.
 
+Together this provides fast webgl rendering for GeoJSON FeatureCollections (currently limited to polygons, lines and points).
+
 wow, very data
 ![Screenshot](/screenshots/screenshot.png?raw=true)
 
