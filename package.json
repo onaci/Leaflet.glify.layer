@@ -1,6 +1,6 @@
 {
 	"name": "leaflet-glify-layer",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Add-on for the Leaflet.glify plugin to provide more leaflet-idiomatic bindings",
 	"main": "dist/leaflet-glify-layer.js",
 	"license": "SEE LICENSE IN LICENCE",
