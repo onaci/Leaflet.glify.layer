@@ -78,8 +78,7 @@ myLayer.addToMap(map);
 |method|params|description|
 |---|---|---|
 |`setStyle`|options: `{ color, border, opacity, size}`|Updates style settings|
-|`getBounds`||Returns [L.latLngBounds](https://leafletjs.com/reference-1.7.1.html#latlngbounds)
-	 * for the `L.glify.layer`|
+|`getBounds`||Returns [L.latLngBounds](https://leafletjs.com/reference-1.7.1.html#latlngbounds) for the `L.glify.layer`|
 |`render`||Force re-render|
 |`update`|`(data, index)`|Calls [update](https://github.com/robertleeplummerjr/Leaflet.glify#update--remove-data) on L.glify layers|
 |`remove`|`(index)`|Calls [remove](https://github.com/robertleeplummerjr/Leaflet.glify#update--remove-data) on L.glify layers|
