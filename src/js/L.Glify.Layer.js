@@ -122,7 +122,7 @@ const GlifyLayer = L.Layer.extend({
 	 * Re-render layers
 	 */
 	render() {
-		if (this._shapesLayer) this._shapesLayer.render();
+	  if (this._shapesLayer) this._shapesLayer.render();
 		if (this._linesLayer) this._linesLayer.render();
 		if (this._pointsLayer) this._pointsLayer.render();
 	},
