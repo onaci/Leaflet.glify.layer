@@ -31,6 +31,7 @@ const GlifyLayer = L.Layer.extend({
 	onAdd: function (map) {
 		
 		this._map = map;
+		if (!this.options.glifyOptions) this.options.glifyOptions = {};
 		this.options.glifyOptions.map = this._map;
 		this._setPane();
 		this.options.glifyOptions.pane = this._paneName;

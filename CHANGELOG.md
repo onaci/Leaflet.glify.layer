@@ -2,6 +2,11 @@
 
 Notable changes to this project will be documented in this file.
 
+## [0.0.5] 2021-03-29
+
+## Fixed 
+- error on init if user omits `glifyOptions`
+
 ## [0.0.4] 2021-03-25
 
 ## Fixed 

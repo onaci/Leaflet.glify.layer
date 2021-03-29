@@ -100,6 +100,7 @@
        */
       onAdd: function (map) {
         this._map = map;
+        if (!this.options.glifyOptions) this.options.glifyOptions = {};
         this.options.glifyOptions.map = this._map;
 
         this._setPane();
