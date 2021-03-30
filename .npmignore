@@ -2,4 +2,5 @@
 screenshots/
 demo/
 data/
-.json
+mixed.json
+node_modules
