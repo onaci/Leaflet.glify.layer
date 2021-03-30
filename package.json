@@ -17,12 +17,12 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/onaci/leaflet-glify-layer.git"
+		"url": "https://github.com/onaci/Leaflet.glify.layer.git"
 	},
 	"bugs": {
-		"url": "https://github.com/onaci/leaflet-glify-layer/issues"
+		"url": "https://github.com/onaci/Leaflet.glify.layer/issues"
 	},
-	"homepage": "https://github.com/onaci/leaflet-glify-layer#readme",
+	"homepage": "https://github.com/onaci/Leaflet.glify.layer#readme",
 	"author": "daniel.wild@csiro.au",
 	"peerDependencies": {
 		"leaflet": "^1.7.1",
